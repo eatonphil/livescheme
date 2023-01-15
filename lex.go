@@ -108,7 +108,7 @@ func lexIdentifierToken(source []rune, cursor int) (int, *token) {
 }
 
 // for example: "(+ 13 2)"
-// lex(" ( 13 2  )") should produce: ["(", "+", "13", "2", ")"]
+// lex(" ( + 13 2  )") should produce: ["(", "+", "13", "2", ")"]
 func lex(raw string) []token {
 	source := []rune(raw)
 	var tokens []token

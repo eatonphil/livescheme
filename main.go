@@ -11,10 +11,12 @@ func main() {
 	}
 
 	tokens := lex(string(program))
-	fmt.Println(tokens)
+	for _, token := range tokens {
+		fmt.Println(token.value)
+	}
 
-	// TODO: parsing
-	//ast := parse(tokens)
+	ast, _ := parse(tokens, 0)
+	fmt.Print(ast.pretty())
 
 	// TODO: execution via AST walking interpretation
 	//value := interpret(ast)
