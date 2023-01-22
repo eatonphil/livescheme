@@ -5,6 +5,7 @@ import (
 )
 
 type tokenKind uint
+
 const (
 	// e.g. "(", ")"
 	syntaxToken tokenKind = iota
@@ -15,8 +16,8 @@ const (
 )
 
 type token struct {
-	value string
-	kind tokenKind
+	value    string
+	kind     tokenKind
 	location int
 }
 
@@ -41,8 +42,8 @@ func eatWhitespace(source []rune, cursor int) int {
 func lexSyntaxToken(source []rune, cursor int) (int, *token) {
 	if source[cursor] == '(' || source[cursor] == ')' {
 		return cursor + 1, &token{
-			value: string([]rune{source[cursor]}),
-			kind: syntaxToken,
+			value:    string([]rune{source[cursor]}),
+			kind:     syntaxToken,
 			location: cursor,
 		}
 	}
@@ -73,8 +74,8 @@ func lexIntegerToken(source []rune, cursor int) (int, *token) {
 	}
 
 	return cursor, &token{
-		value: string(value),
-		kind: integerToken,
+		value:    string(value),
+		kind:     integerToken,
 		location: originalCursor,
 	}
 }
@@ -87,7 +88,7 @@ func lexIdentifierToken(source []rune, cursor int) (int, *token) {
 
 	for cursor < len(source) {
 		r := source[cursor]
-		if !unicode.IsSpace(r) {
+		if !(unicode.IsSpace(r) || r == ')') {
 			value = append(value, r)
 			cursor++
 			continue
@@ -101,8 +102,8 @@ func lexIdentifierToken(source []rune, cursor int) (int, *token) {
 	}
 
 	return cursor, &token{
-		value: string(value),
-		kind: identifierToken,
+		value:    string(value),
+		kind:     identifierToken,
 		location: originalCursor,
 	}
 }

@@ -1,15 +1,16 @@
 package main
 
 type valueKind uint
+
 const (
 	literalValue valueKind = iota
 	listValue
 )
 
 type value struct {
-	kind valueKind
+	kind    valueKind
 	literal *token
-	list *ast
+	list    *ast
 }
 
 func (v value) pretty() string {
@@ -34,33 +35,34 @@ func (a ast) pretty() string {
 
 // for example: "(+ 13 (- 12 1)"
 // parse(["(", "+", "13", "(", "-", "12", "1", ")", ")"]):
-// should produce: ast{
-//   value{
-//     kind: literal,
-//     literal: "+",
-//   },
-//   value{
-//     kind: literal,
-//     literal: "13",
-//   },
-//   value{
-//     kind: list,
-//     list: []value {
-//       value {
-//         kind: literal,
-//         literal: "-",
-//       },
-//       value {
-//         kind: literal,
-//         literal: "12",
-//       },
-//       value {
-//         kind: literal,
-//         literal: "1",
-//       },
-//     }
-//   }
-// }
+//
+//	should produce: ast{
+//	  value{
+//	    kind: literal,
+//	    literal: "+",
+//	  },
+//	  value{
+//	    kind: literal,
+//	    literal: "13",
+//	  },
+//	  value{
+//	    kind: list,
+//	    list: ast {
+//	      value {
+//	        kind: literal,
+//	        literal: "-",
+//	      },
+//	      value {
+//	        kind: literal,
+//	        literal: "12",
+//	      },
+//	      value {
+//	        kind: literal,
+//	        literal: "1",
+//	      },
+//	    }
+//	  }
+//	}
 func parse(tokens []token, index int) (ast, int) {
 	var a ast
 
@@ -92,7 +94,7 @@ func parse(tokens []token, index int) (ast, int) {
 		}
 
 		a = append(a, value{
-			kind: literalValue,
+			kind:    literalValue,
 			literal: &token,
 		})
 		index++

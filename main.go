@@ -11,16 +11,49 @@ func main() {
 	}
 
 	tokens := lex(string(program))
-	for _, token := range tokens {
-		fmt.Println(token.value)
+	debug := false
+	if debug {
+		for _, token := range tokens {
+			fmt.Println(token.value)
+		}
 	}
 
-	ast, _ := parse(tokens, 0)
-	fmt.Print(ast.pretty())
+	var parseIndex int
+	var a = ast{
+		value{
+			kind: literalValue,
+			literal: &token{
+				value: "begin",
+				kind:  identifierToken,
+			},
+		},
+	}
 
-	// TODO: execution via AST walking interpretation
-	//value := interpret(ast)
-	//fmt.Println(value)
+	// Need to keep parsing until end of ALL tokens
+	for parseIndex < len(tokens) {
+		childAst, nextIndex := parse(tokens, parseIndex)
+		a = append(a, value{
+			kind: listValue,
+			list: &childAst,
+		})
+		parseIndex = nextIndex
+	}
+
+	if debug {
+		fmt.Println(a.pretty())
+	}
+
+	// Other potential steps:
+	// 1. static type checking?
+	// not in our language
+
+	// 2. other optimization steps: constant propagation? (+ 5 2) => 7
+	// not for now
+
+	initializeBuiltins()
+	ctx := map[string]any{}
+	value := astWalk(a, ctx)
+	fmt.Println(value)
 
 	// TODO: compile the AST to JavaScript? Go? C? Assembly? LLVM?
 	//compile(ast)

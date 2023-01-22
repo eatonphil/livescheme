@@ -1,18 +1,18 @@
 package main
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 // lexIntegerToken("foo 123", 4) => "123"
 // lexIntegerToken("foo 12 3", 4) => "12"
 // lexIntegerToken("foo 12a 3", 4) => "12" <-- Ignoring this situation
 func Test_lexIntegerToken(t *testing.T) {
-	tests := []struct{
-		source string
-		cursor int
-		expectedValue string
+	tests := []struct {
+		source         string
+		cursor         int
+		expectedValue  string
 		expectedCursor int
 	}{
 		{
@@ -45,10 +45,10 @@ func Test_lexIntegerToken(t *testing.T) {
 // lexIdentifierToken("123 ab + ", 4) => "ab"
 // lexIdentifierToken("123 ab123 + ", 4) => "ab123"
 func Test_lexIdentifierToken(t *testing.T) {
-	tests := []struct{
-		source string
-		cursor int
-		expectedValue string
+	tests := []struct {
+		source         string
+		cursor         int
+		expectedValue  string
 		expectedCursor int
 	}{
 		{
@@ -74,36 +74,36 @@ func Test_lexIdentifierToken(t *testing.T) {
 
 // lex(" ( + 13 2  )") should produce: ["(", "+", "13", "2", ")"]
 func Test_lex(t *testing.T) {
-	tests := []struct{
+	tests := []struct {
 		source string
-		tokens []token 
+		tokens []token
 	}{
 		{
 			" ( + 13 2  )",
 			[]token{
-				token{
-					value: "(",
-					kind: syntaxToken,
+				{
+					value:    "(",
+					kind:     syntaxToken,
 					location: 1,
 				},
-				token{
-					value: "+",
-					kind: identifierToken,
+				{
+					value:    "+",
+					kind:     identifierToken,
 					location: 3,
 				},
-				token{
-					value: "13",
-					kind: integerToken,
+				{
+					value:    "13",
+					kind:     integerToken,
 					location: 5,
 				},
-				token{
-					value: "2",
-					kind: integerToken,
+				{
+					value:    "2",
+					kind:     integerToken,
 					location: 8,
 				},
-				token{
-					value: ")",
-					kind: syntaxToken,
+				{
+					value:    ")",
+					kind:     syntaxToken,
 					location: 11,
 				},
 			},

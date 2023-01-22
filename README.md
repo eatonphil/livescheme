@@ -9,7 +9,12 @@ To run:
 $ go mod tidy
 $ go test
 $ go build
-$ ./livescheme example.scm
+$ cat examples/func.scm
+(func plus (a b) (+ a b))
+
+(plus 2 3)
+$ ./livescheme examples/func.scm
+5
 ```
 
 Stream:

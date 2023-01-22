@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"testing"
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func compareValue(a value, b value) bool {
@@ -43,25 +43,25 @@ func compareAst(a ast, b ast) bool {
 }
 
 func Test_parse(t *testing.T) {
-	tests := []struct{
-		input string
+	tests := []struct {
+		input        string
 		prettyOutput string
-		output ast
+		output       ast
 	}{
 		{
 			"(+ 1 2)",
 			"(+ 1 2 )",
 			ast{
 				value{
-					kind: literalValue,
+					kind:    literalValue,
 					literal: &token{value: "+"},
 				},
 				value{
-					kind: literalValue,
+					kind:    literalValue,
 					literal: &token{value: "1"},
 				},
 				value{
-					kind: literalValue,
+					kind:    literalValue,
 					literal: &token{value: "2"},
 				},
 			},
@@ -71,26 +71,26 @@ func Test_parse(t *testing.T) {
 			"(+ 1 (- 12 9 ) )",
 			ast{
 				value{
-					kind: literalValue,
+					kind:    literalValue,
 					literal: &token{value: "+"},
 				},
 				value{
-					kind: literalValue,
+					kind:    literalValue,
 					literal: &token{value: "1"},
 				},
 				value{
 					kind: listValue,
 					list: &ast{
 						value{
-							kind: literalValue,
+							kind:    literalValue,
 							literal: &token{value: "-"},
 						},
 						value{
-							kind: literalValue,
+							kind:    literalValue,
 							literal: &token{value: "12"},
 						},
 						value{
-							kind: literalValue,
+							kind:    literalValue,
 							literal: &token{value: "9"},
 						},
 					},
@@ -98,84 +98,84 @@ func Test_parse(t *testing.T) {
 			},
 		},
 		{
-		 	"(+ 1 (- 12 9) 12)",
+			"(+ 1 (- 12 9) 12)",
 			"(+ 1 (- 12 9 ) 12 )",
 			ast{
 				value{
-					kind: literalValue,
+					kind:    literalValue,
 					literal: &token{value: "+"},
 				},
 				value{
-					kind: literalValue,
+					kind:    literalValue,
 					literal: &token{value: "1"},
 				},
 				value{
 					kind: listValue,
 					list: &ast{
 						value{
-							kind: literalValue,
+							kind:    literalValue,
 							literal: &token{value: "-"},
 						},
 						value{
-							kind: literalValue,
+							kind:    literalValue,
 							literal: &token{value: "12"},
 						},
 						value{
-							kind: literalValue,
+							kind:    literalValue,
 							literal: &token{value: "9"},
 						},
 					},
 				},
 				value{
-					kind: literalValue,
+					kind:    literalValue,
 					literal: &token{value: "12"},
 				},
 			},
 		},
 		{
-		 	"((+ 1 2) 1 (- 12 9) 12)",
+			"((+ 1 2) 1 (- 12 9) 12)",
 			"((+ 1 2 ) 1 (- 12 9 ) 12 )",
-		 	ast{
+			ast{
 				value{
 					kind: listValue,
 					list: &ast{
 						value{
-							kind: literalValue,
+							kind:    literalValue,
 							literal: &token{value: "+"},
 						},
 						value{
-							kind: literalValue,
+							kind:    literalValue,
 							literal: &token{value: "1"},
 						},
 						value{
-							kind: literalValue,
+							kind:    literalValue,
 							literal: &token{value: "2"},
 						},
 					},
 				},
 				value{
-					kind: literalValue,
+					kind:    literalValue,
 					literal: &token{value: "1"},
 				},
 				value{
 					kind: listValue,
 					list: &ast{
 						value{
-							kind: literalValue,
+							kind:    literalValue,
 							literal: &token{value: "-"},
 						},
 						value{
-							kind: literalValue,
+							kind:    literalValue,
 							literal: &token{value: "12"},
 						},
 						value{
-							kind: literalValue,
+							kind:    literalValue,
 							literal: &token{value: "9"},
 						},
 					},
 				},
 				value{
-					kind: literalValue,
+					kind:    literalValue,
 					literal: &token{value: "12"},
 				},
 			},
