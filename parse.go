@@ -1,5 +1,7 @@
 package main
 
+import "os"
+
 type valueKind uint
 
 const (
@@ -98,6 +100,12 @@ func parse(tokens []token, index int) (ast, int) {
 			literal: &token,
 		})
 		index++
+	}
+
+	if tokens[index-1].kind == syntaxToken &&
+		tokens[index-1].value != ")" {
+		tokens[index-1].debug("Expected closing paren")
+		os.Exit(1)
 	}
 
 	return a, index

@@ -5,12 +5,9 @@ import "fmt"
 
 func main() {
 	// accept program
-	program, err := os.ReadFile(os.Args[1])
-	if err != nil {
-		panic(err)
-	}
+	lc := newLexingContext(os.Args[1])
 
-	tokens := lex(string(program))
+	tokens := lc.lex()
 	debug := false
 	if debug {
 		for _, token := range tokens {
@@ -37,6 +34,10 @@ func main() {
 			list: &childAst,
 		})
 		parseIndex = nextIndex
+	}
+
+	if parseIndex < len(tokens) {
+		panic("Incomplete parse")
 	}
 
 	if debug {

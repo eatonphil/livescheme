@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 )
 
@@ -17,7 +18,7 @@ func copyContext(in map[string]any) map[string]any {
 }
 
 // Eventually with all operations implemented we can do stuff like fib:
-// (def fib (a)
+// (func fib (a)
 //   (if (a < 1)
 //     a
 //     (fib (- a 1) (- a 2))
@@ -36,6 +37,10 @@ func initializeBuiltins() {
 		}
 
 		return astWalk2(_else, ctx)
+	}
+
+	builtins["<"] = func(args []value, ctx map[string]any) any {
+		return astWalk2(args[0], ctx).(int64) < astWalk2(args[1], ctx).(int64)
 	}
 
 	builtins["+"] = func(args []value, ctx map[string]any) any {
@@ -79,6 +84,13 @@ func initializeBuiltins() {
 		ctx[functionName] = func(args []any, ctx map[string]any) any {
 			childCtx := copyContext(ctx)
 			if len(params) != len(args) {
+				// TODO: instead of accepting args
+				// already evaluated, we should
+				// evaluate args inside of here so we
+				// can give a nice error message
+				// instead of panic-ing. To do that we
+				// need the original tokens, so we can
+				// debug the token.
 				panic(fmt.Sprintf("Expected %d args to `%s`, got %d", len(params), functionName, len(args)))
 			}
 			for i, param := range params {
@@ -124,7 +136,12 @@ func astWalk(ast []value, ctx map[string]any) any {
 	}
 
 	// Case: calling a function that is not built in
-	userDefinedFunction := ctx[functionName].(func([]any, map[string]any) any)
+	maybeFunction, ok := ctx[functionName]
+	if !ok {
+		(*ast[0].literal).debug(fmt.Sprintf("Expected function, got %s", functionName))
+		os.Exit(1)
+	}
+	userDefinedFunction := maybeFunction.(func([]any, map[string]any) any)
 
 	// Do we evaluate args here?
 	// If so, special functions like `if` must be handled separately

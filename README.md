@@ -9,12 +9,15 @@ To run:
 $ go mod tidy
 $ go test
 $ go build
-$ cat examples/func.scm
-(func plus (a b) (+ a b))
+$ cat examples/fib.scm
+(func fib (a)
+      (if (< a 2)
+	  a
+	  (+ (fib (- a 1)) (fib (- a 2)))))
 
-(plus 2 3)
-$ ./livescheme examples/func.scm
-5
+(fib 11)
+$ ./livescheme examples/fib.scm
+89
 ```
 
 Stream:
