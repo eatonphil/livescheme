@@ -20,11 +20,13 @@ $ ./livescheme examples/fib.scm
 89
 ```
 
-Stream:
-* Sundays at 5pm NY time
-* [https://twitch.tv/eatonphil](twitch.tv/eatonphil)
-
 Archives:
 * [Part 1: A lexer](https://www.youtube.com/watch?v=lZNhZI-dN9k)
 * [Part 2: Parsing](https://www.youtube.com/watch?v=5ttFEPQopXc)
 * [Part 3: AST walking interpreter](https://www.youtube.com/watch?v=YwmGcverSHI)
+* [Part 4: Cleanup and Fibonacci](https://www.youtube.com/watch?v=skDhTWILH8I)
+
+
+Stream (Paused):
+* Sundays at 5pm NY time
+* [https://twitch.tv/eatonphil](twitch.tv/eatonphil)
