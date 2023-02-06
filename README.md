@@ -29,4 +29,4 @@ Archives:
 
 Stream (Paused):
 * Sundays at 5pm NY time
-* [https://twitch.tv/eatonphil](twitch.tv/eatonphil)
+* [twitch.tv/eatonphil](https://twitch.tv/eatonphil)
