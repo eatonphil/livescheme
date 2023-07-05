@@ -44,7 +44,6 @@ func (t token) debug(description string) {
 	for i < len(t.lc.source) {
 		r := t.lc.source[i]
 
-		tokenLineNumber++
 		if i < t.location {
 			tokenColumn++
 		}
@@ -52,6 +51,7 @@ func (t token) debug(description string) {
 		tokenLine = append(tokenLine, r)
 
 		if r == '\n' {
+			tokenLineNumber++
 			// Got to the end of the line that the token is in.
 			if inTokenLine {
 				// Now outside the loop, `tokenLine`
